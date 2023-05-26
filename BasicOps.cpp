@@ -22,7 +22,12 @@ void menuPrincipal();
 
 
 void menuPrincipal(){
-    menuCalculadora();
+    cout << "1. Consultar la hora del sistema"<<endl;
+    cout << "2. Calculadora"<<endl;
+    cout << "3. Calcular el factorial"<<endl;
+    cout << "4. Conversion de unidades"<<endl;
+    cout << "5. Temperatura"<< endl;
+
 }
 
 
@@ -188,6 +193,23 @@ void menuDivision(){
   }
   menuCalculadora();
 }
+
+void hora(){
+    char formato[] = "%02d:%02d:%02d\n";
+    int hora, minuto, segundo;
+
+    asm(
+            "mov $0, %%eax \n"
+            "leal %1, %%ebx \n"
+            "xor %%ecx, %%ecx \n"
+            "xor %%edx, %%edx \n"
+            "int $0x80 \n"
+            : "=c" (hora), "=d" (minuto), "=S" (segundo)
+            : "b" (formato)
+            : "%eax"
+            );
+}
+
 
 
 int main() {
