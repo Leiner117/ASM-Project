@@ -810,6 +810,6 @@ void converMonedas(int select1,int select2,float valor){
 
 
 int main() {
-    converMonedas(1,2,10);
+    menuPrincipal();
     return 0 ;
 }
