@@ -24,7 +24,7 @@ void hora();
 void factorial();
 void decimalBinario();
 void menuConverBinarias();
-void ConversionLongitud(int,int,float);
+void conversionLongitud(int,int,float);
 void menuConvLongitud();
 void menuConvMasas();
 void menuConverUni();
@@ -36,7 +36,14 @@ void menuConvMonedas();
 ///----------------------------------------Menu principal------------------------------------------------///
 
 
+/**
+ * La función muestra un menú con diferentes opciones y ejecuta la función correspondiente según la
+ * entrada del usuario.
+ */
+
+
 void menuPrincipal(){
+    system("clear");
     while(true){
         int op = 0;
         cout << "1. Consultar la hora del sistema"<<endl;
@@ -66,8 +73,13 @@ void menuPrincipal(){
 
 ///----------------------------------------Menu Conversion de unidades------------------------------------------------///
 
+/**
+ * La función muestra un menú para conversiones de unidades y redirige a submenús según la entrada del
+ * usuario.
+ */
 }
 void menuConverUni(){
+    system("clear");
     int op = 0;
     cout << "1. Sistemas numericos"<<endl;
     cout << "2. Longitud"<<endl;
@@ -98,7 +110,12 @@ void menuConverUni(){
 
 ///----------------------------------------Menu conversiones de binarios------------------------------------------------///
 
+/**
+ * La función muestra un menú para convertir entre números decimales y binarios y llama a la función de
+ * conversión correspondiente según la entrada del usuario.
+ */
 void menuConverBinarias(){
+    system("clear");
     int op = 0;
     cout<< "1. Decimal a Binario"<<endl;
     cout<< "2. Binario a Decimal"<<endl;
@@ -114,8 +131,12 @@ void menuConverBinarias(){
 
 
 ///----------------------------------------Menu conversiones de longitud------------------------------------------------///
+/**
+ * Esta función muestra un menú para convertir unidades de longitud y toma la entrada del usuario para
+ * realizar la conversión.
+ */
 void menuConvLongitud(){
-
+    system("clear");
     int select1;
     int select2;
     float valor;
@@ -127,7 +148,7 @@ void menuConvLongitud(){
     cin>>select2;
     cout<< "Ingrese el valor que quiere convertir"<<endl;
     cin>>valor;
-    ConversionLongitud(select1,select2,valor);
+    conversionLongitud(select1,select2,valor);
 
 }
 
@@ -135,8 +156,12 @@ void menuConvLongitud(){
 
 ///----------------------------------------Menu conversiones de masas------------------------------------------------///
 
+/**
+ * Esta función muestra un menú para convertir unidades de masa y solicita al usuario que seleccione
+ * las unidades e ingrese un valor para convertir.
+ */
 void menuConvMasas(){
-
+    system("clear");
     int select1;
     int select2;
     float valor;
@@ -151,8 +176,14 @@ void menuConvMasas(){
     converMasas(select1,select2,valor);
 
 }
+///----------------------------------------Menu conversiones de Temperatura------------------------------------------------///
 
+/**
+ * Esta función muestra un menú para seleccionar unidades de temperatura y valores para convertir, y
+ * llama a otra función para realizar la conversión.
+ */
 void menuConvTemp(){
+    system("clear");
     int select1;
     int select2;
     float valor;
@@ -168,7 +199,15 @@ void menuConvTemp(){
 
 }
 
+/**
+ * Esta función muestra un menú para convertir monedas y solicita al usuario que seleccione las monedas
+ * e ingrese un valor para convertir.
+ */
+
+///----------------------------------------Menu conversiones de Monedas------------------------------------------------///
+
 void menuConvMonedas(){
+    system("clear");
     int select1;
     int select2;
     float valor;
@@ -187,6 +226,10 @@ void menuConvMonedas(){
 
 ///----------------------------------------Operaciones Aritmeticas------------------------------------------------///
 
+/**
+ * La función muestra un menú para operaciones aritméticas y redirige al submenú correspondiente según
+ * la entrada del usuario.
+ */
 void menuCalculadora(){
     system("clear");
   char x = '0';
@@ -195,7 +238,8 @@ void menuCalculadora(){
   cout << endl <<"1. SUMA";
   cout << endl <<"2. RESTA";
   cout << endl <<"3. MULTIPLICACION";
-  cout << endl <<"4. DIVISION";  
+  cout << endl <<"4. DIVISION";
+  cout << endl <<"5. Potencia";
   cout << endl <<"Opcion: ";
   cin >> x;
 
@@ -214,12 +258,18 @@ void menuCalculadora(){
   else if(x == '4'){
     menuDivision();
   }
+  else if (x == '5'){
+    menuPotencia();
+  }
   else{
     menuCalculadora();
   }
 }
 
 
+/**
+ * Esta función realiza la suma de dos números usando lenguaje ensamblador en C++.
+ */
 void menuSuma(){
   char x = '1';
 
@@ -252,6 +302,9 @@ void menuSuma(){
 }
 
 
+/**
+ * Esta función realiza la resta de dos números usando lenguaje ensamblador en C++.
+ */
 void menuResta(){
   char x = '1';
 
@@ -284,6 +337,9 @@ void menuResta(){
 }
 
 
+/**
+ * La función realiza la multiplicación de dos números usando lenguaje ensamblador en C++.
+ */
 void menuMultiplicacion(){
   char x = '1';
 
@@ -316,6 +372,10 @@ void menuMultiplicacion(){
 }
 
 
+/**
+ * Esta función realiza la división de dos números usando lenguaje ensamblador y muestra el resultado
+ * en un programa C++.
+ */
 void menuDivision(){
   char x = '1';
 
@@ -348,11 +408,48 @@ void menuDivision(){
   menuCalculadora();
 }
 
+void menuPotencia(){
+    system("clear");
+    float num1, num2, result;
 
+    cout << endl <<"Digite el primer numero: ";
+    cin >> num1;
+
+    cout << endl <<"Digite el Segundo numero: ";
+    cin >> num2;
+
+    asm volatile (
+            "fld %1;"
+            "fld %2;"
+            "fyl2x;"
+            "fld %%st;"
+            "frndint;"
+            "fsub %%st, %%st(1);"
+            "fxch;"
+            "fchs;"
+            "f2xm1;"
+            "fld1;"
+            "faddp;"
+            "fscale;"
+            "fstp %0;"
+            : "=m" (result)
+            : "m" (num2), "m" (num1)
+            : "st"
+            );
+
+    std::cout << "Resultado: " << result << std::endl;
+    string x;
+    cout << endl << endl <<"--> Presione una tecla para salir....";
+    cin >> x;
+}
 ///----------------------------------------HORA DEL SISTEMA------------------------------------------------///
 
+/**
+ * La función utiliza ensamblado en línea en C++ para llamar a la función del sistema gettimeofday y
+ * recuperar la hora actual en horas, minutos y segundos.
+ */
 void hora(){
-
+    system("clear");
     int hour, minute, second;
 
     __asm__ volatile (
@@ -374,6 +471,13 @@ void hora(){
 }
 ///----------------------------------------Factorial------------------------------------------------///
 
+/**
+ * Esta función calcula el factorial de un número entero dado mediante ensamblado en línea en C++.
+ * 
+ * @param n Un parámetro de entrada entero que representa el número para el que se debe calcular el
+ * factorial.
+ * @return La función `factorial_asm` devuelve el factorial del entero de entrada `n`.
+ */
 int factorial_asm(int n) {
     int result;
     __asm__ __volatile__(
@@ -392,7 +496,12 @@ int factorial_asm(int n) {
     return result;
 }
 
+/**
+ * La función solicita al usuario que ingrese un número, calcula su factorial usando una función de
+ * lenguaje ensamblador y genera el resultado.
+ */
 void factorial() {
+    system("clear");
     int num;
     std::cout << "Ingrese un número: ";
     std::cin >> num;
@@ -400,6 +509,9 @@ void factorial() {
     int result = factorial_asm(num);
 
     std::cout << "El factorial de " << num << " es: " << result << std::endl;
+    string x;
+    cout << endl << endl <<"--> Presione una tecla para salir....";
+    cin >> x;
 
 
 }
@@ -439,6 +551,7 @@ void decimalToBinary_asm() {
 ***/
 
 void decimalBinario(){
+    system("clear");
     int num;
     std::cout << "Ingrese un número decimal: ";
     std::cin >> num;
@@ -446,7 +559,17 @@ void decimalBinario(){
 
 }
 
-void ConversionLongitud(int select1,int select2,float cant){
+/**
+ * La función realiza la conversión de unidades para diferentes unidades de longitud usando un mapa y
+ * lenguaje ensamblador.
+ * 
+ * @param select1 Un número entero que representa la unidad de medida a partir de la cual convertir.
+ * Las opciones son:
+ * @param select2 La unidad de medida a la que se convertirá el valor de entrada.
+ * @param cant La cantidad de la unidad inicial que se convertirá a la unidad de destino.
+ */
+void conversionLongitud(int select1,int select2,float cant){
+    system("clear");
     /**
      * Metros,Kilometros,millas,pulgadas,pies
      */
@@ -494,13 +617,25 @@ void ConversionLongitud(int select1,int select2,float cant){
 
 
     std::cout << "Resultado: " << result << std::endl;
+    string x;
+    cout << endl << endl <<"--> Presione una tecla para salir....";
+    cin >> x;
 }
 
 
 ///----------------------------------------Conversion de Masas------------------------------------------------///
 
-//Gramos,Kilogramos,Libras
+/**
+ * La función convierte unidades de masa utilizando un mapa y un ensamblaje en línea en C++.
+ * 
+ * @param select1 un número entero que representa la unidad de medida del valor de entrada (1 para
+ * gramos, 2 para kilogramos, 3 para libras)
+ * @param select2 la unidad de medidad a la que se quiere convertir
+ * 
+ * @param valor El valor a convertir de una unidad de masa a otra.
+ */
 void converMasas(int select1,int select2,float valor){
+    system("clear");
     std::map<int, std::map<int, float>> unidadesPeso;
     float result = 0;
     unidadesPeso[1][3] = 0.00220462;
@@ -524,11 +659,25 @@ void converMasas(int select1,int select2,float valor){
 
 
     std::cout << "Resultado: " << result << std::endl;
+    string x;
+    cout << endl << endl <<"--> Presione una tecla para salir....";
+    cin >> x;
 }
 
 ///----------------------------------------Conversion de Temperatura------------------------------------------------///
 
+/**
+ * Esta función convierte valores de temperatura entre Celsius, Fahrenheit y Kelvin usando lenguaje
+ * ensamblador.
+ * 
+ * @param select1 un número entero que representa la unidad de temperatura a convertir (1 = Celsius, 2
+ * = Fahrenheit, 3 = Kelvin)
+ * @param select2 La unidad de temperatura a la que se va a convertir el valor de temperatura de
+ * entrada.
+ * @param valor El valor de la temperatura a convertir.
+ */
 void converTemp(int select1,int select2,float valor){
+    system("clear");
     std::map<int, std::map<int, float>> unidadesTemperatura;
     float result = 0;
     unidadesTemperatura[1][2] = 33.8;
@@ -572,36 +721,71 @@ void converTemp(int select1,int select2,float valor){
                 );
 
         std::cout << "Resultado: " << resultado2 << std::endl;
+        string x;
+        cout << endl << endl <<"--> Presione una tecla para salir....";
+        cin >> x;
     }
 
-
-
-
-
-
 }
+/**
+ * La función convierte un valor dado de una moneda a otra utilizando un mapa y un código ensamblador
+ * en línea.
+ * 
+ * @param select1 Un número entero que representa el código de moneda de la moneda de entrada.
+ * @param select2 El código de moneda para la moneda a la que se debe convertir el valor de entrada.
+ * @param valor El valor a convertir de una moneda a otra.
+ */
 void converMonedas(int select1,int select2,float valor){
-    /***std::ifstream archivo("C:\\Users\\leine\\OneDrive\\Documentos\\GitHub\\ASM-Project\\cambioDivisa.txt"); // Reemplaza "archivo.txt" por la ruta y nombre de tu archivo de texto
+    system("clear");
+    int cont1= 1;
 
+    float divisa = 0;
+    float result = 0;
+    std::ifstream archivo("C:\\Users\\leine\\OneDrive\\Documentos\\GitHub\\ASM-Project\\cambioDivisa.txt"); // Reemplaza "archivo.txt" por la ruta y nombre de tu archivo de texto
+    std::map<int, std::map<int, float>> unidadesMonedas;
     if (archivo.is_open()) {
         std::string linea;
         while (std::getline(archivo, linea)) {
-            std::cout << linea << std::endl;
+            divisa = std::stof(linea.substr(19,6));
+            if (cont1 == 1){
+
+                unidadesMonedas[1][2] = divisa;
+
+            }
+            else if(cont1 == 2){
+                unidadesMonedas[1][3] = divisa;
+            }
+            else if(cont1 == 3){
+                unidadesMonedas[2][1] = divisa;
+            }
+            else if(cont1 == 4){
+                unidadesMonedas[2][3] = divisa;
+            }
+            else if(cont1 == 5){
+                unidadesMonedas[3][2] = divisa;
+            }
+            else if(cont1 == 6){
+                unidadesMonedas[3][1] = divisa;
+            }
+            cont1++;
+
+
+
         }
 
         archivo.close();
     } else {
         std::cout << "No se pudo abrir el archivo." << std::endl;
-    }***/
-    std::map<int, std::map<int, float>> unidadesMonedas;
-    float result = 0;
+    }
+
+    /***
     unidadesMonedas[1][2] = 541.080374;
     unidadesMonedas[1][3] = 0.932079;
     unidadesMonedas[2][1] = 0.001848;
     unidadesMonedas[2][3] = 0.001721;
     unidadesMonedas[3][2] = 1.072871;
     unidadesMonedas[3][1] = 581.113078;
-
+    ***/
     float num = unidadesMonedas.at(select1).at(select2);
 
     asm volatile (
@@ -615,6 +799,9 @@ void converMonedas(int select1,int select2,float valor){
 
 
     std::cout << "Resultado: " << result << std::endl;
+    string x;
+    cout << endl << endl <<"--> Presione una tecla para salir....";
+    cin >> x;
 }
 
 
@@ -623,6 +810,6 @@ void converMonedas(int select1,int select2,float valor){
 
 
 int main() {
-    menuPrincipal();
+    converMonedas(1,2,10);
     return 0 ;
 }
